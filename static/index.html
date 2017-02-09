@@ -1,0 +1,198 @@
+{% load static %}
+{% load tz %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A Twitter API scraper">
+    <meta name="author" content="Letrato">
+    <link rel="shortcut icon" href="{% static "imgs/favicon.ico" %}" type="image/x-icon">
+    <link rel="icon" href="{% static "imgs/favicon.ico" %}" type="image/x-icon">
+    <title>The Last Thousand</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static "font-awesome/css/font-awesome.min.css" %}">
+
+    <!-- Custom CSS -->
+    <link href="{% static "css/twitter.io.css" %}" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+    <div id="page-content" class="container">
+        <div id="title-panel" class="panel text-center panel-default blue-shadow">
+          <a href="https://github.com/lestrato/the-last-thousand"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+            <h1><a href="/">The Last Thousand</a></h1>
+            <form method="GET">
+              <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Search with a keyword&hellip;" name="keyword" value="{% if keyword %}{{keyword}}{% endif %}" required/>
+                  <select class="form-control" name="count" required>
+                    <option disabled>how many?</option>
+                    <option>1000</option>
+                    <option>500</option>
+                    <option>250</option>
+                    <option>100</option>
+                    <option>50</option>
+                    <option>10</option>
+                    <option>1</option>
+                  </select>
+                  <span class="input-group-btn">
+                      <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+                  </span>
+              </div>
+            </form>
+            {% if keyword %}
+                <h3><small>
+                    displaying
+                    {% if status == 200 %}
+                      {% if response|length >= 0 %}
+                        {{response|length }}
+                      {% endif %}
+                    result{{response|length|pluralize}}
+                    {% else %}
+                      0 results
+                    {% endif %}
+                    with query: {{keyword}}
+                </small></h3>
+            {% else %}
+            <h3><small>no keyword inputted</small></h3>
+            {% endif %}
+        </div>
+
+        <hr class="gradient">
+
+        <div class="row">
+            {% if not status %}
+                <div id="info-panel" class="panel blue-shadow" id="accordion">
+                    <div class="panel-heading"><h2 class="text-center">How it works</h2>
+                        <hr class="thin small">
+                    </div>
+
+                    <div class="list-group">
+                        <div class="list-group-item inset-white">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                <h4 class="list-group-item-heading">1. Building a Query</h4>
+                            </a>
+                            <p id="collapseOne" class="list-group-item-text collapse">
+                              To find the most recent 1000 tweets tailored to your curious needs, you're required to conduct a <strong>query</strong>
+                              on the Twitter database.<br><br>
+                              <strong>Examples:</strong><br>
+                              Querying 'pizza' will find you 1000 global tweets with the word 'pizza' in them.<br>
+                              Querying '#pizza' will find you 1000 global tweets with the hashtag 'pizza'.<br><br>
+                              Full documentation on basic and advanced querying is available <a href="https://dev.twitter.com/rest/public/search">here</a>.
+                            </p>
+                        </div>
+
+                        <div class="list-group-item inset-white">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                <h4 class="list-group-item-heading">2. Fetching Posts from Twitter</h4>
+                            </a>
+                            <p id="collapseTwo" class="list-group-item-text collapse">
+                              Leave the rest to us! We have authorization with Twitter to use their API and get the 1000 tweets that
+                              you desire.<br><br>
+                              But make sure you <strong>do</strong> enter a keyword -- because we can't just send an empty query to
+                              them, no siree. It's also possible that your query isn't popular with the user base. That's right,
+                              it isn't a mistake that 'wunderbutts' returned <strong>0 results</strong>.
+                            </p>
+                        </div>
+
+                        <div class="list-group-item inset-white">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                                <h4 class="list-group-item-heading">3. Interpreting the Posts</h4>
+                            </a>
+                            <p id="collapseThree" class="list-group-item-text collapse">
+                              Once we have the tweets in our robotic hands, we go through each one and sort them all
+                              from <strong>most popular</strong> to <strong>least popular</strong>.<br><br>Our measure of popularity is the sum of the number
+                              of favourites + the number of retweets each individual tweet got.
+                              <br><br>
+                              The tweets we got from Twitter are in <strong>JSON format</strong>, so we have some magic on the server side that
+                              interprets the data into tweet text, twitter handle, etc.
+                            </p>
+                        </div>
+
+                        <div class="list-group-item inset-white">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+                                <h4 class="list-group-item-heading">4. Displaying the Tweets</h4>
+                            </a>
+                            <p id="collapseFour" class="list-group-item-text collapse">
+                              Last but not least, we show you what you came here for. Your query results are displayed
+                              to you on-page whether you like it or not.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% elif status == 200 %}
+                {% for post in response %}
+                    <div class="tweet-item panel panel-default blue-shadow">
+                        <div class="panel-body">
+                            <div class="row tweet-header">
+                                <div class="col-xs-3">
+                                    <img class="img-thumbnail" src="{{post.thumbnail}}" alt="no thumbnail available">
+                                </div>
+                                <div class="col-xs-9">
+                                    <div class="row">
+                                        <strong>{{post.name | safe}}</strong>
+                                    </div>
+                                    <div class="row">
+                                      <small><a href="https://twitter.com/{{post.screen_name | safe}}">{{post.screen_name | safe}}</a> - {{post.created_at|timesince:now}} </small>
+                                    </div>
+                                    <div class="row">
+                                      <small>
+                                        <span class="label label-primary">{{post.retweet_count}} <i class="fa fa-retweet fa-fw"></i></span>
+                                        <span class="label label-primary">{{post.favorite_count}} <i class="fa fa-heart fa-fw"></i></span>
+                                      </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="thin">
+                            <div class="row-fluid tweet-body">
+                                <a href="https://twitter.com/{{post.screen_name | safe}}/status/{{post.id_str}}">{{post.text | safe}}</a>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div id="info-panel" class="panel blue-shadow">
+                        <div class="panel-heading"><h2 class="text-center">Uh Oh</h2>
+                            <hr class="thin small">
+                        </div>
+                        {% include "error_message.html" with header="The query you submitted found no results in Twitter's API!" descriptor="This could mean a lot of things, but it's more than likely because either the query is unpopular or the query has a syntactical error somewhere in it."%}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div id="info-panel" class="panel blue-shadow">
+                    <div class="panel-heading"><h2 class="text-center">Uh Oh</h2>
+                        <hr class="thin small">
+                    </div>
+                    {% if status == 429 %}
+                        {% include "error_message.html" with header="Twitter has received too many requests from us!" descriptor="We're only authorized to send out 450 requests in any given 15 minute interval -- try your query again in a couple of minutes.<br><strong>Note:</strong> one request counts for up to 100 tweets that you queried for." %}
+                    {% else %}
+                        {% include "error_message.html" with header=status descriptor=response|add:".<br>See what it means <a href='https://dev.twitter.com/overview/api/response-codes'>here</a>."|safe %}
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- jQuery Version 1.11.1 -->
+    <script src="{% static "js/jquery.js" %}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+</body>
+
+</html>

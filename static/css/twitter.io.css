@@ -1,0 +1,260 @@
+/*==================================================
+ * Main Stuff
+ * ===============================================*/
+ @font-face {
+  font-family: nordic;
+  src: url(../fonts/Anders.ttf);
+}
+
+body {
+  background-image: url('../imgs/clouds.png');
+}
+
+#page-content {
+  margin-top: 20px;
+}
+
+/*==================================================
+ * Title Panel
+ * ===============================================*/
+#title-panel {
+  padding: 25px 25px;
+}
+
+#title-panel > h1 {
+  padding-bottom: 20px;
+}
+
+#title-panel > h3 {
+  margin-top: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #777;
+}
+
+#title-panel > h1 > a:hover{
+  text-decoration: inherit;
+}
+
+#title-panel > h1 {
+  font-family: nordic;
+  text-shadow: 0 1px 0 #ccc,
+                 0 2px 0 #c9c9c9,
+                 0 3px 0 #bbb,
+                 0 4px 0 #b9b9b9,
+                 0 5px 0 #aaa,
+                 0 6px 1px rgba(0,0,0,.1),
+                 0 0 5px rgba(0,0,0,.1),
+                 0 1px 3px rgba(0,0,0,.3),
+                 0 3px 5px rgba(0,0,0,.2),
+                 0 5px 10px rgba(0,0,0,.25),
+                 0 10px 10px rgba(0,0,0,.2),
+                 0 20px 20px rgba(0,0,0,.15);
+}
+
+/*==================================================
+ * Info Panel
+ * ===============================================*/
+#info-panel h2 {
+  font-family: nordic;
+}
+
+#info-panel  > .panel-heading {
+  padding-bottom: 0px;
+}
+
+#error-message {
+  padding: 0px 30px 20px;
+}
+
+/*==================================================
+ * How It Works Menu
+ * ===============================================*/
+.list-group {
+  padding: 20px 30px;
+}
+
+.list-group-item {
+  transition: background-color .25s ease-in-out;
+  -moz-transition: background-color .25s ease-in-out;
+  -webkit-transition: background-color .25s ease-in-out;
+}
+
+.list-group-item:hover, .list-group-item:focus{
+  background-color: rgba(154, 210, 229, 0.35);
+}
+
+.list-group-item > a {
+  color: inherit;
+}
+
+.list-group-item > a:hover, .list-group-item > a:focus{
+  text-decoration: none
+}
+
+/*==================================================
+ * Search Forms
+ * ===============================================*/
+form > .input-group > input[type=text], form > .input-group > select {
+  border-right: 0px;
+}
+
+form > .input-group > input[type=text] {
+  width: 80%;
+}
+
+form > .input-group > select.form-control {
+  width: 20%;
+}
+
+/*==================================================
+ * Tweet Styles
+ * ===============================================*/
+.tweet-item {
+  width: 345px;
+  margin-bottom: 25px;
+  display: inline-block;
+}
+
+
+.tweet-item .panel-body {
+  height: 175px;
+  margin: 15px;
+  overflow: hidden;
+  padding: inherit;
+}
+
+/*==================================================
+ * Tweet styles
+ * ===============================================*/
+.tweet-header > .col-xs-9 > .row:not(:first-child){
+  line-height: 1.4;
+}
+
+.tweet-header .img-thumbnail {
+  max-width: inherit;
+}
+
+.tweet-body {
+  text-overflow: ellipsis;
+}
+
+
+/*==================================================
+ * Hr Styles
+ * ===============================================*/
+hr.gradient {
+  border: 0;
+  height: 2px;
+  background-image: -webkit-linear-gradient(left, #dcf0f6, #ffffff, #dcf0f6);
+  background-image: -moz-linear-gradient(left, #dcf0f6, #ffffff, #dcf0f6);
+  background-image: -ms-linear-gradient(left, #dcf0f6, #ffffff, #dcf0f6);
+  background-image: -o-linear-gradient(left, #dcf0f6, #ffffff, #dcf0f6);
+}
+
+hr.thin {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-top: 1px solid #ddd;
+}
+
+hr.small {
+  width: 75%;
+}
+
+/*==================================================
+ * Blue Shadow
+ * ===============================================*/
+.blue-shadow
+{
+    position:relative;
+    -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(154, 210, 229, 0.75) inset;
+       -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(154, 210, 229, 0.75) inset;
+            box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(154, 210, 229, 0.75) inset;
+}
+.blue-shadow:before, .blue-shadow:after
+{
+    content:"";
+    position:absolute;
+    z-index:-1;
+    -webkit-box-shadow:0 0 20px rgba(0,0,0,0.8);
+    -moz-box-shadow:0 0 20px rgba(0,0,0,0.8);
+    box-shadow:0 0 20px rgba(0,0,0,0.8);
+    top:50%;
+    bottom:0;
+    left:10px;
+    right:10px;
+    -moz-border-radius:100px / 10px;
+    border-radius:100px / 10px;
+}
+.blue-shadow:after
+{
+    right:10px;
+    left:auto;
+    -webkit-transform:skew(8deg) rotate(3deg);
+       -moz-transform:skew(8deg) rotate(3deg);
+        -ms-transform:skew(8deg) rotate(3deg);
+         -o-transform:skew(8deg) rotate(3deg);
+            transform:skew(8deg) rotate(3deg);
+}
+
+/*==================================================
+ * Inset White
+ * ===============================================*/
+.inset-white
+{
+    position:relative;
+    -webkit-box-shadow: 0 0 40px rgba(255, 255, 255, 0.8) inset;
+       -moz-box-shadow: 0 0 40px rgba(255, 255, 255, 0.8) inset;
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.8) inset;
+}
+
+/*==================================================
+ * Miscellaneous
+ * ===============================================*/
+ .panel {
+   border-radius: 25px;
+ }
+
+form > .input-group, #info-panel {
+  width: 50%;
+  left: 25%;
+  position: relative;
+}
+
+/*==================================================
+ * Media Queries
+ * ===============================================*/
+@media (max-width: 767px) {
+    .tweet-item {
+        margin-left: 25%;
+    }
+}
+
+@media (max-width: 991px) {
+  form > .input-group > input[type=text] {
+    width: 60%;
+  }
+
+  form > .input-group > select.form-control {
+    width: 40%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .tweet-item {
+        margin-left: 2.5%;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .tweet-item {
+        margin-left: 9.5%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .tweet-item {
+        margin-left: 2.75%;
+    }
+}
